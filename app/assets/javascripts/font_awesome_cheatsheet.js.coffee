@@ -18,6 +18,9 @@ $(".row div").css
   "padding-bottom": "20px"
   "color": "#a7a7a7"
 
+$(".row div .muted:hover").css
+  "opacity": "0.5"
+
 $("i").css
   "font-size": "26px"
   "color": "#000"
@@ -25,6 +28,3 @@ $("i").css
 $("#wrap").css
   "margin-bottom": "0x"
   "padding-bottom": "5px"
-
-
-
