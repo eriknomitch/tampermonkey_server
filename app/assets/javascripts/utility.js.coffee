@@ -3,5 +3,5 @@
 @hideElements = (elements) ->
   $(elements.join(",")).hide()
 
-@hidden = (selectors...) ->
+@hide = (selectors...) ->
   hideElements selectors

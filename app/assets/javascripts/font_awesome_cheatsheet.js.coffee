@@ -1,24 +1,25 @@
 #= require utility
+#= require_self
+#= require post
+
+hide ".jumbotron", ".hidden-print", ".page-header"
 
 # ---
-hidden ".jumbotron", ".hidden-print", ".page-header"
-
-# ---
-hidden ".jumbotron", ".hidden-print", ".page-header"
 $(".container").css
   "padding-top": "20px"
 
+$(".row div").css
+  "font-size": "15px"
+  "padding-bottom": "20px"
+  "color": "#a7a7a7"
+
 $("i").css
   "font-size": "26px"
-
-$(".row div").css
-  "padding-bottom": "20px"
+  "color": "#000"
 
 $("#wrap").css
   "margin-bottom": "0x"
-  "padding-bottom": "0px"
+  "padding-bottom": "5px"
 
-# ---
-$("body").show()
-$("#GM_load_block").remove()
+
 
