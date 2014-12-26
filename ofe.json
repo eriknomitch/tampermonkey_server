@@ -1,5 +1,5 @@
 {
   "default": {
-    "extensions": [".js.coffee"]
+    "extensions": [".js.coffee", ".css.sass"]
   }
 }

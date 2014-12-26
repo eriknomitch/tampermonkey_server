@@ -8,23 +8,12 @@
 hide ".jumbotron", ".hidden-print", ".page-header"
 
 # ------------------------------------------------
-# STYLING ----------------------------------------
+# MODIFICATIONS ----------------------------------
 # ------------------------------------------------
-$(".container").css
-  "padding-top": "20px"
+$("span.muted").each (index, element) ->
+  html = $(element).html()
 
-$(".row div").css
-  "font-size": "15px"
-  "padding-bottom": "20px"
-  "color": "#a7a7a7"
+  html =  html.replace /\[/, " - "
+  html =  html.replace /\]/, ""
 
-$(".row div .muted:hover").css
-  "opacity": "0.5"
-
-$("i").css
-  "font-size": "26px"
-  "color": "#000"
-
-$("#wrap").css
-  "margin-bottom": "0x"
-  "padding-bottom": "5px"
+  $(element).html(html)
