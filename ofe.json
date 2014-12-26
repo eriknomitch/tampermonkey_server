@@ -1,0 +1,5 @@
+{
+  "default": {
+    "extensions": [".js.coffee"]
+  }
+}
