@@ -22,3 +22,5 @@
 .*.swp
 
 /vendor/bundle
+
+.DS_Store
