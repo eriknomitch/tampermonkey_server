@@ -1,3 +1,16 @@
 #= require_self
 #= require utility
 #= require bootstrap
+
+@GM =
+  env: "<%= Rails.env %>"
+
+GM.domain = switch
+  when "development"
+    "localhost:3000"
+  when "production"
+    "tapermonkey-server.herokuapp.com"
+
+alert(GM.domain)
+
+
