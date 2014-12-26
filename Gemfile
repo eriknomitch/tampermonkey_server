@@ -52,3 +52,5 @@ end
 gem 'binding_of_caller'
 gem 'validates_formatting_of'
 gem 'tzinfo-data'
+
+gem 'rails_12factor', group: [:staging, :production]
