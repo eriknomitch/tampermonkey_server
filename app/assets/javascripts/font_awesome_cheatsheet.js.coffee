@@ -11,9 +11,6 @@ hide ".jumbotron", ".hidden-print", ".page-header"
 # MODIFICATIONS ----------------------------------
 # ------------------------------------------------
 $("span.muted").each (index, element) ->
-  html = $(element).html()
-
-  html =  html.replace /\[/, " - "
-  html =  html.replace /\]/, ""
-
-  $(element).html(html)
+  $(element).html (htmlIndex, html) ->
+    html =  html.replace /\[/, " - "
+    html =  html.replace /\]/, ""
