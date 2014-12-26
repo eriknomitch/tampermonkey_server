@@ -1,6 +1,16 @@
 #= require pre
 #= require_self
-#= require post
+
+# ------------------------------------------------
+# BOOTSTRAP --------------------------------------
+# ------------------------------------------------
+@GM_start = (unsafeWindow) ->
+  GM_bootstrap unsafeWindow,
+    name:
+      system: "font_awesome_cheatsheet"
+    remote:
+      domain: "localhost:3000",
+      suffix: "/assets/"
 
 # ------------------------------------------------
 # SELECTORS->HIDDEN ------------------------------
@@ -14,3 +24,6 @@ $("span.muted").each (index, element) ->
   $(element).html (htmlIndex, html) ->
     html =  html.replace /\[/, " - "
     html =  html.replace /\]/, ""
+
+performPost()
+ 

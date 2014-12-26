@@ -1,4 +1,4 @@
-function GM_bootstrap(GM) {
+function GM_bootstrap(unsafeWindow, GM) {
 
   GM.remote.urlNoProtocol = "//"+GM.remote.domain+GM.remote.suffix;
   GM.remote.url           = "http:"+GM.remote.urlNoProtocol;
