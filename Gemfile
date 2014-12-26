@@ -55,4 +55,4 @@ gem 'tzinfo-data'
 
 gem 'rails_12factor', group: [:staging, :production]
 
-ruby '2.1.1'
+ruby '2.1.5'
