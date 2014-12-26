@@ -8,9 +8,6 @@
   GM_bootstrap.call this,
     name:
       system: "font_awesome_cheatsheet"
-    remote:
-      domain: "localhost:3000",
-      suffix: "/assets/"
 
 @GM_main = () ->
 

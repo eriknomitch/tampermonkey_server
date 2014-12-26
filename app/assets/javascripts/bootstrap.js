@@ -1,7 +1,13 @@
 function GM_bootstrap(GM) {
 
+  GM.remote = {
+    domain: "tampermonkey-server.herokuapp.com",
+    suffix: "/assets/",
+    protocol: "https://"
+  }
+
   GM.remote.urlNoProtocol = "//"+GM.remote.domain+GM.remote.suffix;
-  GM.remote.url           = "http:"+GM.remote.urlNoProtocol;
+  GM.remote.url           = GM.remote.protocol+GM.remote.urlNoProtocol;
   GM.remote.stylesheet    = GM.remote.url + "/" + GM.name.system + ".css";
   GM.remote.script        = GM.remote.url + "/" + GM.name.system + ".js";
 
