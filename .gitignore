@@ -20,3 +20,5 @@
 .env
 
 .*.swp
+
+/vendor/bundle
