@@ -4,8 +4,8 @@
 # ------------------------------------------------
 # BOOTSTRAP --------------------------------------
 # ------------------------------------------------
-@GM_start = (unsafeWindow) ->
-  GM_bootstrap unsafeWindow,
+@GM_start = () ->
+  GM_bootstrap.call this,
     name:
       system: "font_awesome_cheatsheet"
     remote:
