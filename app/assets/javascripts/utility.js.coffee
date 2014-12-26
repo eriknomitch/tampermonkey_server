@@ -6,8 +6,7 @@
   catch error
     alert message
 
-@performPost = () ->
-  console.log "post"
+@GM_post = () ->
   $("body").show()
   $("#GM_load_block").remove()
 

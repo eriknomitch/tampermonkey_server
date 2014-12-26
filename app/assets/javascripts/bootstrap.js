@@ -44,6 +44,9 @@ function GM_bootstrap(unsafeWindow, GM) {
         
         // Inject Stylesheet
         $("head").append("<link rel=\"stylesheet\" href=\""+ GM.remote.stylesheet + "\" type=\"text/css\" />");
+
+        GM_main()
+        GM_post()
         
       });
       

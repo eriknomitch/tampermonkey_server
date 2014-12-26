@@ -12,18 +12,18 @@
       domain: "localhost:3000",
       suffix: "/assets/"
 
-# ------------------------------------------------
-# SELECTORS->HIDDEN ------------------------------
-# ------------------------------------------------
-hide ".jumbotron", ".hidden-print", ".page-header"
+@GM_main = () ->
 
-# ------------------------------------------------
-# MODIFICATIONS ----------------------------------
-# ------------------------------------------------
-$("span.muted").each (index, element) ->
-  $(element).html (htmlIndex, html) ->
-    html =  html.replace /\[/, " - "
-    html =  html.replace /\]/, ""
+  # ------------------------------------------------
+  # SELECTORS->HIDDEN ------------------------------
+  # ------------------------------------------------
+  hide ".jumbotron", ".hidden-print", ".page-header"
 
-performPost()
- 
+  # ------------------------------------------------
+  # MODIFICATIONS ----------------------------------
+  # ------------------------------------------------
+  $("span.muted").each (index, element) ->
+    $(element).html (htmlIndex, html) ->
+      html =  html.replace /\[/, " - "
+      html =  html.replace /\]/, ""
+
