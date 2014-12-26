@@ -24,3 +24,5 @@
 /vendor/bundle
 
 .DS_Store
+
+run
