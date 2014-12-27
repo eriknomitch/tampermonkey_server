@@ -104,3 +104,18 @@
   $("body").show()
   $("#GM_load_block").remove()
 
+#@UM_hideWhenReady = (selector, options={}) ->
+  #for selector in selectors
+    #$(selector).ready () ->
+      #$(selector).hide().css
+        #display: "none !important"
+
+@UM_hideWhenReady = (selector, options={}) ->
+
+  $(selector).ready () ->
+
+    $(selector).hide().css
+      display: "none !important"
+
+    options.ready() if options.ready
+
