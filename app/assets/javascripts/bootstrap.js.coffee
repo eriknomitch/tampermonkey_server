@@ -6,6 +6,36 @@ trace "TOP"
 # ------------------------------------------------
 # GM->BOOTSTRAP ----------------------------------
 # ------------------------------------------------
+@GM_on_documentReady = () ->
+
+  trace "GM_on_documentReady"
+
+  # Inject Script
+  s = document.createElement("script")
+  
+  s.type = "text/javascript"
+  s.src  = GM.remote.script
+  
+  $("head").append s
+
+  # Inject Stylesheet
+  ss = document.createElement("link")
+
+  ss.rel  = "stylesheet"
+  ss.href = GM.remote.stylesheet
+  ss.type = "text/css"
+
+  $("head").append ss
+  
+  # Call script-defined GM_main
+  GM_main()
+
+  # Then generic GM_post
+  GM_post()
+
+# ------------------------------------------------
+# GM->BOOTSTRAP ----------------------------------
+# ------------------------------------------------
 @GM_bootstrap = () ->
   trace "GM_bootstrap"
   
@@ -30,52 +60,27 @@ trace "TOP"
   document.getElementsByTagName("html")[0].appendChild div
   
   (GM_initializeWhenjQueryReady = ->
-    if unsafeWindow.$
 
-      $.extend GM.remote,
-        urlNoProtocol: "//#{GM.domain}#{GM.remote.suffix}"
-      
-      $.extend GM.remote,
-        url: "#{GM.remote.protocol}:#{GM.remote.urlNoProtocol}"
-      
-      $.extend GM.remote,
-        stylesheet:    "#{GM.remote.urlNoProtocol}/#{GM.name.system}.css"
-        script:        "#{GM.remote.urlNoProtocol}/#{GM.name.system}.js"
+    # jQuery is not ready
+    # --------------------------------------------
+    return setTimeout(GM_initializeWhenjQueryReady, 1) unless unsafeWindow.$
 
-      trace GM
-  
-      $(document).ready ->
+    # jQuery is ready
+    # --------------------------------------------
+    $.extend GM.remote,
+      urlNoProtocol: "//#{GM.domain}#{GM.remote.suffix}"
+    
+    $.extend GM.remote,
+      url: "#{GM.remote.protocol}:#{GM.remote.urlNoProtocol}"
+    
+    $.extend GM.remote,
+      stylesheet:    "#{GM.remote.urlNoProtocol}/#{GM.name.system}.css"
+      script:        "#{GM.remote.urlNoProtocol}/#{GM.name.system}.js"
 
-        trace "document ready"
+    $(document).ready GM_on_documentReady
 
-        # Inject Script
-        s = document.createElement("script")
-        
-        s.type = "text/javascript"
-        s.src  = GM.remote.script
-        
-        $("head").append s
+    true
 
-        # Inject Stylesheet
-        ss = document.createElement("link")
-
-        ss.rel  = "stylesheet"
-        ss.href = GM.remote.stylesheet
-        ss.type = "text/css"
-
-        $("head").append ss
-        
-        # Call script-defined GM_main
-        GM_main()
-
-        # Then generic GM_post
-        GM_post()
-
-        return
-
-      return true
-
-    setTimeout GM_initializeWhenjQueryReady, 1
   )()
 
 # ------------------------------------------------
