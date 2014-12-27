@@ -39,26 +39,32 @@
 @GM_bootstrap = () ->
   trace "GM_bootstrap"
   
+  # Extend the GM config with the user-supplied config
+  # ----------------------------------------------
   $.extend GM, GM_config
 
+  # Create/inject Load Block div
+  # ----------------------------------------------
   div = document.createElement("div")
 
   div.id = "GM_load_block"
 
   css =
-    position: "fixed"
-    top: "0px"
-    right: "0px"
-    bottom: "0px"
-    left: "0px"
+    position:  "fixed"
+    top:        "0px"
+    right:      "0px"
+    bottom:     "0px"
+    left:       "0px"
     background: "#ffffff"
-    "z-index": "999999"
+    "z-index":  "999999"
 
   for prop of css
     div.style[prop] = css[prop]
 
   document.getElementsByTagName("html")[0].appendChild div
-  
+ 
+  # Initialize UberMonkey when jQuery is ready
+  # ----------------------------------------------
   (GM_initializeWhenjQueryReady = ->
 
     # jQuery is not ready
