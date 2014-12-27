@@ -25,6 +25,7 @@
 
       $("#um_links").css
         margin: "30px"
+        "margin-top": "60px"
         "text-align": "center"
       
       $("#um_links a").css
