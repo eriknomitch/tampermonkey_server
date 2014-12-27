@@ -1,17 +1,14 @@
 @GM_bootstrap = (GM) ->
+  trace "GM_bootstrap"
 
   GM.remote =
-    domain: "tampermonkey-server.herokuapp.com"
-    suffix: "/assets/"
+    suffix:   "/assets/"
     protocol: "https://"
 
-  GM.remote.urlNoProtocol = "//" + GM.remote.domain + GM.remote.suffix
-  GM.remote.url = GM.remote.protocol + GM.remote.urlNoProtocol
-  GM.remote.stylesheet = GM.remote.url + "/" + GM.name.system + ".css"
-  GM.remote.script = GM.remote.url + "/" + GM.name.system + ".js"
-
   div = document.createElement("div")
+
   div.id = "GM_load_block"
+
   css =
     position: "fixed"
     top: "0px"
@@ -26,33 +23,54 @@
 
   document.getElementsByTagName("html")[0].appendChild div
   
-  #console.log(GM_info);
-  #var GM_script_name = 
-  #unsafeWindow.GM_script_name = "
   (GM_initializeWhenjQueryReady = ->
     if unsafeWindow.$
+
+      $.extend GM.remote,
+        urlNoProtocol: "//#{GM.domain}#{GM.remote.suffix}"
+        url:           "#{GM.remote.protocol}#{GM.remote.urlNoProtocol}"
+        stylesheet:    "#{GM.remote.url}/#{GM.name.system}.css"
+        script:        "#{GM.remote.url}/#{GM.name.system}.js"
+  
       $(document).ready ->
-        
+
+        trace "document ready"
+
         # Inject Script
         s = document.createElement("script")
-        s.type = "text/javascript"
-        s.src = GM.remote.script
-
-        #$(s).load ->
-        #  alert "loaded"
-        #  trace "loaded CSS"
-
-        $("head").append s
         
+        s.type = "text/javascript"
+        s.src  = GM.remote.script
+        
+        $("head").append s
+
         # Inject Stylesheet
-        $("head").append "<link rel=\"stylesheet\" href=\"" + GM.remote.stylesheet + "\" type=\"text/css\" />"
+        ss = document.createElement("link")
+
+        ss.rel  = "stylesheet"
+        ss.href = GM.remote.stylesheet
+        ss.type = "text/css"
+
+        $("head").append ss
+        
+        # Call script-defined GM_main
         GM_main()
+
+        # Then generic GM_post
         GM_post()
+
         return
 
       return true
+
     setTimeout GM_initializeWhenjQueryReady, 1
-    return
   )()
-  GM
+
+@GM_start = () ->
+  trace "GM_start"
+  GM_bootstrap.call this, GM_config
+
+@GM_post = () ->
+  $("body").show()
+  $("#GM_load_block").remove()
 
