@@ -9,12 +9,12 @@
   trace "GM_on_documentReady"
 
   # Inject Script
-  s = document.createElement("script")
+  script = document.createElement("script")
   
-  s.type = "text/javascript"
-  s.src  = GM.remote.script
+  script.type = "text/javascript"
+  script.src  = GM.remote.script
   
-  $("head").append s
+  $("head").append script
 
   # Inject Stylesheet
   link = document.createElement("link")
