@@ -6,10 +6,16 @@ trace "pre"
 
 @GM =
   env: "<%= Rails.env %>"
+  remote:
+    suffix: "/assets"
 
 GM.domain = switch
   when "development"
-    "localhost:3000"
+    "development.tampermonkey-server.com:3000"
   when "production"
-    "tapermonkey-server.herokuapp.com"
+    "tampermonkey-server.herokuapp.com"
+
+GM.remote.protocol = switch
+  when "production" then "https"
+  else "http"
 

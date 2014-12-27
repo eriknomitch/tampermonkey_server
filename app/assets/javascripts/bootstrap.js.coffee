@@ -1,16 +1,15 @@
 # ================================================
 # COFFEE->
 # ================================================
+trace "TOP"
 
 # ------------------------------------------------
 # GM->BOOTSTRAP ----------------------------------
 # ------------------------------------------------
-@GM_bootstrap = (GM) ->
+@GM_bootstrap = () ->
   trace "GM_bootstrap"
-
-  GM.remote =
-    suffix:   "/assets/"
-    protocol: "https://"
+  
+  $.extend GM, GM_config
 
   div = document.createElement("div")
 
@@ -35,9 +34,15 @@
 
       $.extend GM.remote,
         urlNoProtocol: "//#{GM.domain}#{GM.remote.suffix}"
-        url:           "#{GM.remote.protocol}#{GM.remote.urlNoProtocol}"
-        stylesheet:    "#{GM.remote.url}/#{GM.name.system}.css"
-        script:        "#{GM.remote.url}/#{GM.name.system}.js"
+      
+      $.extend GM.remote,
+        url: "#{GM.remote.protocol}:#{GM.remote.urlNoProtocol}"
+      
+      $.extend GM.remote,
+        stylesheet:    "#{GM.remote.urlNoProtocol}/#{GM.name.system}.css"
+        script:        "#{GM.remote.urlNoProtocol}/#{GM.name.system}.js"
+
+      trace GM
   
       $(document).ready ->
 
@@ -78,7 +83,7 @@
 # ------------------------------------------------
 @GM_start = () ->
   trace "GM_start"
-  GM_bootstrap.call this, GM_config
+  GM_bootstrap.call this
 
 # ------------------------------------------------
 # GM->POST ---------------------------------------
