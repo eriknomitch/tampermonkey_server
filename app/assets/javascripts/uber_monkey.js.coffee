@@ -17,13 +17,13 @@
   $("head").append s
 
   # Inject Stylesheet
-  ss = document.createElement("link")
+  link = document.createElement("link")
 
-  ss.rel  = "stylesheet"
-  ss.href = GM.remote.stylesheet
-  ss.type = "text/css"
+  link.rel  = "stylesheet"
+  link.href = GM.remote.stylesheet
+  link.type = "text/css"
 
-  $("head").append ss
+  $("head").append link
   
   # Call script-defined GM_main
   GM_main()
