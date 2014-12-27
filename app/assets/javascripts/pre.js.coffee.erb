@@ -7,13 +7,11 @@
   remote:
     suffix: "/assets"
 
-GM.domain = switch
+switch GM.env
   when "development"
-    "development.tampermonkey-server.com:3000"
+    GM.domain = "development.tampermonkey-server.com:3000"
+    GM.remote.protocol = "http"
   when "production"
-    "tampermonkey-server.herokuapp.com"
-
-GM.remote.protocol = switch
-  when "production" then "https"
-  else "http"
+    GM.domain = "tampermonkey-server.herokuapp.com"
+    GM.remote.protocol = "https"
 

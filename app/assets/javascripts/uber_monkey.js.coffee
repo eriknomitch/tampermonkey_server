@@ -23,6 +23,8 @@
   link.href = GM.remote.stylesheet
   link.type = "text/css"
 
+  alert link.href
+
   $("head").append link
   
   # Call script-defined GM_main
@@ -72,8 +74,8 @@
       url: "#{GM.remote.protocol}:#{GM.remote.urlNoProtocol}"
     
     $.extend GM.remote,
-      stylesheet:    "#{GM.remote.urlNoProtocol}/#{GM.name.system}.css"
-      script:        "#{GM.remote.urlNoProtocol}/#{GM.name.system}.js"
+      stylesheet:    "#{GM.remote.url}/#{GM.name.system}.css"
+      script:        "#{GM.remote.url}/#{GM.name.system}.js"
 
     $(document).ready GM_on_documentReady
 

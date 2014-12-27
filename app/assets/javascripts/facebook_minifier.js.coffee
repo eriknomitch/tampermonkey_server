@@ -12,8 +12,15 @@
 # ------------------------------------------------
 @GM_main = () ->
 
-  trace document
-  trace unsafeWindow
+  $("#mainContainer").ready () ->
+
+    trace "READY"
+
+    $("#mainContainer").hide().css
+      display: "none !important"
+
+  #trace document
+  #trace unsafeWindow
 
   this
 
