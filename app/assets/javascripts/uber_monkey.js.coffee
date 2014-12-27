@@ -9,12 +9,7 @@
   trace "GM_on_documentReady"
 
   # Inject Script
-  script = document.createElement("script")
-  
-  script.type = "text/javascript"
-  script.src  = GM.remote.script
-  
-  $("head").append script
+  GM_injectStylesheet()
 
   # Inject Stylesheet
   link = document.createElement("link")
@@ -30,6 +25,18 @@
 
   # Then generic GM_post
   GM_post()
+
+@GM_injectStylesheet = () ->
+  return unless GM.use.stylesheet
+
+  trace "injecting"
+  
+  script = document.createElement("script")
+  
+  script.type = "text/javascript"
+  script.src  = GM.remote.script
+  
+  $("head").append script
 
 # ------------------------------------------------
 # GM->BOOTSTRAP ----------------------------------

@@ -6,11 +6,15 @@
 @GM_config =
   name:
     system: "facebook_minifier"
+  use:
+    stylesheet: false
 
 # ------------------------------------------------
 # GM->MAIN ---------------------------------------
 # ------------------------------------------------
 @GM_main = () ->
+
+  trace "GM_main"
 
   UM_hideWhenReady "#mainContainer",
     ready: () ->
@@ -39,6 +43,8 @@
 
   UM_hideWhenReady "#pagelet_dock"
   UM_hideWhenReady "#pagelet_sidebar"
+
+  $(unsafeWindow).on "popstate", @GM_main
   
   this
 
