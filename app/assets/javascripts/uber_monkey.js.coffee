@@ -23,8 +23,6 @@
   link.href = GM.remote.stylesheet
   link.type = "text/css"
 
-  alert link.href
-
   $("head").append link
   
   # Call script-defined GM_main
