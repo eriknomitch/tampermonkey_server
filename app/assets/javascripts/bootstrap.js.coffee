@@ -1,4 +1,5 @@
 @GM_bootstrap = (GM) ->
+
   GM.remote =
     domain: "tampermonkey-server.herokuapp.com"
     suffix: "/assets/"
@@ -8,6 +9,7 @@
   GM.remote.url = GM.remote.protocol + GM.remote.urlNoProtocol
   GM.remote.stylesheet = GM.remote.url + "/" + GM.name.system + ".css"
   GM.remote.script = GM.remote.url + "/" + GM.name.system + ".js"
+
   div = document.createElement("div")
   div.id = "GM_load_block"
   css =
@@ -21,6 +23,7 @@
 
   for prop of css
     div.style[prop] = css[prop]
+
   document.getElementsByTagName("html")[0].appendChild div
   
   #console.log(GM_info);
@@ -47,7 +50,6 @@
     return
   )()
   GM
-
 
 #function GM_bootstrap(GM) {
 #
