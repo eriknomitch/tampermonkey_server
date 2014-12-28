@@ -2,18 +2,18 @@
 #= require_self
 #= require uber_monkey
 
-@GM =
+@UM =
   env: "<%= Rails.env %>"
   remote:
     suffix: "/assets"
   use:
     stylesheet: true
 
-switch GM.env
+switch UM.env
   when "development"
-    GM.domain = "development.tampermonkey-server.com:3000"
-    GM.remote.protocol = "http"
+    UM.domain = "development.ubermonkey-server.com:3000"
+    UM.remote.protocol = "http"
   when "production"
-    GM.domain = "tampermonkey-server.herokuapp.com"
-    GM.remote.protocol = "https"
+    UM.domain = "ubermonkey-server.herokuapp.com"
+    UM.remote.protocol = "https"
 

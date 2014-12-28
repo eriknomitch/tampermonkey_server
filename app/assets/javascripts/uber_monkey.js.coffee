@@ -3,56 +3,56 @@
 # ================================================
 
 # ------------------------------------------------
-# GM->ON->DOCUMENT-READY -------------------------
+# UM->ON->DOCUMENT-READY -------------------------
 # ------------------------------------------------
-@GM_on_documentReady = () ->
-  trace "GM_on_documentReady"
+@UM_on_documentReady = () ->
+  trace "UM_on_documentReady"
 
   # Inject Script
-  GM_injectStylesheet()
+  UM_injectStylesheet()
 
   # Inject Stylesheet
   link = document.createElement("link")
 
   link.rel  = "stylesheet"
-  link.href = GM.remote.stylesheet
+  link.href = UM.remote.stylesheet
   link.type = "text/css"
 
   $("head").append link
   
-  # Call script-defined GM_main
-  GM_main()
+  # Call script-defined UM_main
+  UM_main()
 
-  # Then generic GM_post
-  GM_post()
+  # Then generic UM_post
+  UM_post()
 
-@GM_injectStylesheet = () ->
-  return unless GM.use.stylesheet
+@UM_injectStylesheet = () ->
+  return unless UM.use.stylesheet
 
   trace "injecting"
   
   script = document.createElement("script")
   
   script.type = "text/javascript"
-  script.src  = GM.remote.script
+  script.src  = UM.remote.script
   
   $("head").append script
 
 # ------------------------------------------------
-# GM->BOOTSTRAP ----------------------------------
+# UM->BOOTSTRAP ----------------------------------
 # ------------------------------------------------
-@GM_bootstrap = () ->
-  trace "GM_bootstrap"
+@UM_bootstrap = () ->
+  trace "UM_bootstrap"
   
-  # Extend the GM config with the user-supplied config
+  # Extend the UM config with the user-supplied config
   # ----------------------------------------------
-  $.extend GM, GM_config
+  $.extend UM, UM_config
 
   # Create/inject Load Block div
   # ----------------------------------------------
   div = document.createElement("div")
 
-  div.id = "GM_load_block"
+  div.id = "UM_load_block"
 
   css =
     position:  "fixed"
@@ -70,46 +70,46 @@
  
   # Initialize UberMonkey when jQuery is ready
   # ----------------------------------------------
-  (GM_initializeWhenjQueryReady = ->
+  (UM_initializeWhenjQueryReady = ->
 
     # jQuery is not ready
     # --------------------------------------------
-    return setTimeout(GM_initializeWhenjQueryReady, 1) unless unsafeWindow.$
+    return setTimeout(UM_initializeWhenjQueryReady, 1) unless unsafeWindow.$
 
     # jQuery is ready
     # --------------------------------------------
-    $.extend GM.remote,
-      urlNoProtocol: "//#{GM.domain}#{GM.remote.suffix}"
+    $.extend UM.remote,
+      urlNoProtocol: "//#{UM.domain}#{UM.remote.suffix}"
     
-    $.extend GM.remote,
-      url: "#{GM.remote.protocol}:#{GM.remote.urlNoProtocol}"
+    $.extend UM.remote,
+      url: "#{UM.remote.protocol}:#{UM.remote.urlNoProtocol}"
     
-    $.extend GM.remote,
-      stylesheet:    "#{GM.remote.url}/#{GM.name.system}.css"
-      script:        "#{GM.remote.url}/#{GM.name.system}.js"
+    $.extend UM.remote,
+      stylesheet:    "#{UM.remote.url}/#{UM.name.system}.css"
+      script:        "#{UM.remote.url}/#{UM.name.system}.js"
 
-    $(document).ready GM_on_documentReady
+    $(document).ready UM_on_documentReady
 
     true
 
   )()
 
 # ------------------------------------------------
-# GM->START --------------------------------------
+# UM->START --------------------------------------
 # ------------------------------------------------
-@GM_start = () ->
-  trace "GM_start"
+@UM_start = () ->
+  trace "UM_start"
 
-  GM_bootstrap.call this
+  UM_bootstrap.call this
 
 # ------------------------------------------------
-# GM->POST ---------------------------------------
+# UM->POST ---------------------------------------
 # ------------------------------------------------
-@GM_post = () ->
-  trace "GM_post"
+@UM_post = () ->
+  trace "UM_post"
 
   $("body").show()
-  $("#GM_load_block").remove()
+  $("#UM_load_block").remove()
 
 #@UM_hideWhenReady = (selector, options={}) ->
   #for selector in selectors
