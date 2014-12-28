@@ -5,7 +5,7 @@ default: &default
 
 local: &local
   username: ubermonkey_server
-  password: ubermonkey
+  password: ubermonkey_server
   host: localhost
   port: 5432
 
