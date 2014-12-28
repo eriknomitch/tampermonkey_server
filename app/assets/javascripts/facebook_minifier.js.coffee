@@ -19,6 +19,8 @@
   UM_hideWhenReady "#mainContainer",
     ready: () ->
 
+      trace "mainContainer is ready"
+
       $("#mainContainer").parent().html """
       <div id="um_links">
         <a href="/events">Events</a>

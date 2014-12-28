@@ -50,6 +50,9 @@
 # UM->BOOTSTRAP ----------------------------------
 # ------------------------------------------------
 @UM_bootstrap = () ->
+
+  return if UM.state.bootstrapped
+
   trace "UM_bootstrap"
   
   # Extend the UM config with the user-supplied config
@@ -102,6 +105,10 @@
 
   )()
 
+  UM.state.bootstrapped = true
+
+  this
+
 # ------------------------------------------------
 # UM->START --------------------------------------
 # ------------------------------------------------
@@ -118,12 +125,6 @@
 
   $("body").show()
   $("#UM_load_block").remove()
-
-#@UM_hideWhenReady = (selector, options={}) ->
-  #for selector in selectors
-    #$(selector).ready () ->
-      #$(selector).hide().css
-        #display: "none !important"
 
 @UM_hideWhenReady = (selector, options={}) ->
 

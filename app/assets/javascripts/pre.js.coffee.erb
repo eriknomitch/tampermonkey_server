@@ -2,6 +2,9 @@
 #= require_self
 #= require ubermonkey
 
+# ------------------------------------------------
+# UM->DEFINE -------------------------------------
+# ------------------------------------------------
 @UM =
   env: "<%= Rails.env %>"
   remote:
@@ -10,11 +13,15 @@
     stylesheet: true
   restartOn:
     pushState: true
+  state:
+    bootstrapped: false
 
+# ------------------------------------------------
+# UM->SET-DYNAMIC --------------------------------
+# ------------------------------------------------
 [UM.domain, UM.remote.protocol] = switch UM.env
   when "development"
     ["development.ubermonkey-server.com:3000", "http"]
   when "production"
     ["ubermonkey-server.herokuapp.com", "https"]
 
-trace UM
