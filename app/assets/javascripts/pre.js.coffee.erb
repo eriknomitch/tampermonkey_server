@@ -33,3 +33,12 @@ $.extend UM.remote,
 $.extend UM.remote,
   url: "#{UM.remote.protocol}:#{UM.remote.urlNoProtocol}"
 
+# ------------------------------------------------
+# UM->EMPTY-MAIN ---------------------------------
+# ------------------------------------------------
+
+# Define an empty function here. The user's script will overwrite it
+# later.
+UM.main = () ->
+  trace "Warning: You have not defined UM.main in your script."
+
