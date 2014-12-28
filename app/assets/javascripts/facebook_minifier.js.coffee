@@ -44,7 +44,8 @@
   UM_hideWhenReady "#pagelet_dock"
   UM_hideWhenReady "#pagelet_sidebar"
 
-  $(unsafeWindow).on "popstate", @GM_main
+  #$(unsafeWindow).on "popstate", () =>
+    #GM_main()
   
   this
 
