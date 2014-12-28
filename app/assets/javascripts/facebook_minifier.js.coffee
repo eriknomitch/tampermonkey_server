@@ -1,20 +1,20 @@
 #= require pre
 
 # ------------------------------------------------
-# GM->CONFIG -------------------------------------
+# UM->CONFIG -------------------------------------
 # ------------------------------------------------
-@GM_config =
+@UM_config =
   name:
     system: "facebook_minifier"
   use:
     stylesheet: false
 
 # ------------------------------------------------
-# GM->MAIN ---------------------------------------
+# UM->MAIN ---------------------------------------
 # ------------------------------------------------
-@GM_main = () ->
+@UM_main = () ->
 
-  trace "GM_main"
+  trace "UM_main"
 
   UM_hideWhenReady "#mainContainer",
     ready: () ->
@@ -45,7 +45,7 @@
   UM_hideWhenReady "#pagelet_sidebar"
 
   #$(unsafeWindow).on "popstate", () =>
-    #GM_main()
+    #UM_main()
   
   this
 
