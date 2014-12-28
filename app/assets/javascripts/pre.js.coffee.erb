@@ -12,9 +12,11 @@
   use:
     stylesheet: true
   restartOn:
-    pushState: true
+    pushState: false
   state:
     bootstrapped: false
+  script:
+    config:{}
 
 # ------------------------------------------------
 # UM->SET-DYNAMIC --------------------------------
@@ -24,4 +26,10 @@
     ["development.ubermonkey-server.com:3000", "http"]
   when "production"
     ["ubermonkey-server.herokuapp.com", "https"]
+
+$.extend UM.remote,
+  urlNoProtocol: "//#{UM.domain}#{UM.remote.suffix}"
+
+$.extend UM.remote,
+  url: "#{UM.remote.protocol}:#{UM.remote.urlNoProtocol}"
 

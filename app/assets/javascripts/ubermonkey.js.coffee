@@ -5,133 +5,146 @@
 # ------------------------------------------------
 # UM->ON->DOCUMENT-READY -------------------------
 # ------------------------------------------------
-@UM_on_documentReady = () ->
-  trace "UM_on_documentReady"
-
-  UM_prepareWindowOnPushState()
-  UM_injectStylesheet()
-
-  UM_main() # This is Ubermonkey script's defined UM_main
-
-  UM_post()
-
-@UM_prepareWindowOnPushState = () ->
-  return unless UM.restartOn.pushState
-
-    # http://stackoverflow.com/questions/4570093/how-to-get-notified-about-changes-of-the-history-via-history-pushstate 
-    ((history) ->
-      pushState = history.pushState
-      history.pushState = (state) ->
-        history.onpushstate state: state  if typeof history.onpushstate is "function"
-
-        # ... whatever else you want to do
-        # maybe call onhashchange e.handler
-        pushState.apply history, arguments
-
-      return
-    ) window.history
-
-    window.onpopstate = history.onpushstate = (newState) ->
-      UM_start()
-
-@UM_injectStylesheet = () ->
-  return unless UM.use.stylesheet
-
-  trace "injecting"
+$.extend UM,
   
-  script = document.createElement("script")
-  
-  script.type = "text/javascript"
-  script.src  = UM.remote.script
-  
-  $("head").append script
-
-# ------------------------------------------------
-# UM->BOOTSTRAP ----------------------------------
-# ------------------------------------------------
-@UM_bootstrap = () ->
-
-  return if UM.state.bootstrapped
-
-  trace "UM_bootstrap"
-  
-  # Extend the UM config with the user-supplied config
   # ----------------------------------------------
-  $.extend UM, UM_config
-
-  # Create/inject Load Block div
+  # UM->PREPARATION ------------------------------
   # ----------------------------------------------
-  div = document.createElement("div")
+  onDocumentReady: () ->
 
-  div.id = "UM_load_block"
+    trace "UM.onDocumentReady"
 
-  css =
-    position:  "fixed"
-    top:        "0px"
-    right:      "0px"
-    bottom:     "0px"
-    left:       "0px"
-    background: "#ffffff"
-    "z-index":  "999999"
+    UM.injectUMScript()
+    UM.injectUMStylesheet()
 
-  for prop of css
-    div.style[prop] = css[prop]
+    UM.prepareWindowOnPushState()
 
-  document.getElementsByTagName("html")[0].appendChild div
- 
-  # Initialize UberMonkey when jQuery is ready
-  # ----------------------------------------------
-  (UM_initializeWhenjQueryReady = ->
+    UM.main() # This is Ubermonkey script's defined UM.main
 
-    # jQuery is not ready
-    # --------------------------------------------
-    return setTimeout(UM_initializeWhenjQueryReady, 1) unless unsafeWindow.$
+    UM.post()
 
-    # jQuery is ready
-    # --------------------------------------------
-    $.extend UM.remote,
-      urlNoProtocol: "//#{UM.domain}#{UM.remote.suffix}"
+  prepareWindowOnPushState: () ->
+
+    return unless UM.restartOn.pushState
+
+      # http://stackoverflow.com/questions/4570093/how-to-get-notified-about-changes-of-the-history-via-history-pushstate 
+      ((history) ->
+        pushState = history.pushState
+        history.pushState = (state) ->
+          history.onpushstate state: state  if typeof history.onpushstate is "function"
+
+          # ... whatever else you want to do
+          # maybe call onhashchange e.handler
+          pushState.apply history, arguments
+
+        return
+      ) window.history
+
+      window.onpopstate = history.onpushstate = (newState) ->
+        UM.start()
+
+  injectUMScript: () ->
+    script = document.createElement("script")
     
-    $.extend UM.remote,
-      url: "#{UM.remote.protocol}:#{UM.remote.urlNoProtocol}"
+    script.type = "text/javascript"
+    script.src  = UM.remote.script
     
+    $("head").append script
+
+  injectUMStylesheet: () ->
+    return unless UM.use.stylesheet
+
+    trace "UM.injectUMStylesheet"
+
+    link = document.createElement("link")
+    link.rel  = "stylesheet"
+    link.href = UM.remote.stylesheet
+    link.type = "text/css"
+    $("head").append link
+
+  # ----------------------------------------------
+  # UM->BOOTSTRAP --------------------------------
+  # ----------------------------------------------
+  bootstrap: () ->
+
+    return if UM.state.bootstrapped
+
+    trace "UM.bootstrap"
+    
+    # Extend the UM config with the user-supplied config
+    # ----------------------------------------------
+    $.extend true, UM, UM.script.config
+
+    # Since we have the name, we can now define the paths
+    # --------------------------------------------
     $.extend UM.remote,
       stylesheet:    "#{UM.remote.url}/#{UM.name.system}.css"
       script:        "#{UM.remote.url}/#{UM.name.system}.js"
 
-    $(document).ready UM_on_documentReady
+    # Create/inject Load Block div
+    # ----------------------------------------------
+    div = document.createElement("div")
 
-    true
+    div.id = "UM_load_block"
 
-  )()
+    css =
+      position:  "fixed"
+      top:        "0px"
+      right:      "0px"
+      bottom:     "0px"
+      left:       "0px"
+      background: "#ffffff"
+      "z-index":  "999999"
 
-  UM.state.bootstrapped = true
+    for prop of css
+      div.style[prop] = css[prop]
 
-  this
+    document.getElementsByTagName("html")[0].appendChild div
+   
+    # Initialize UberMonkey when jQuery is ready
+    # ----------------------------------------------
+    (UM_initializeWhenjQueryReady = ->
 
-# ------------------------------------------------
-# UM->START --------------------------------------
-# ------------------------------------------------
-@UM_start = () ->
-  trace "UM_start"
+      # jQuery is not ready
+      # --------------------------------------------
+      return setTimeout(UM_initializeWhenjQueryReady, 1) unless unsafeWindow.$
 
-  UM_bootstrap.call this
+      # jQuery is ready
+      # --------------------------------------------
+      $(document).ready UM.onDocumentReady
 
-# ------------------------------------------------
-# UM->POST ---------------------------------------
-# ------------------------------------------------
-@UM_post = () ->
-  trace "UM_post"
+      true
 
-  $("body").show()
-  $("#UM_load_block").remove()
+    )()
 
-@UM_hideWhenReady = (selector, options={}) ->
+    UM.state.bootstrapped = true
 
-  $(selector).ready () ->
+    this
 
-    $(selector).hide().css
-      display: "none !important"
+  # ------------------------------------------------
+  # UM->POST ---------------------------------------
+  # ------------------------------------------------
+  post: () ->
+    trace "UM.post"
 
-    options.ready() if options.ready
+    $("body").show()
+    $("#UM_load_block").remove()
+
+  hideWhenReady: (selector, options={}) ->
+
+    $(selector).ready () ->
+
+      $(selector).hide().css
+        display: "none !important"
+
+      options.ready() if options.ready
+
+  # ----------------------------------------------
+  # UM->START ------------------------------------
+  # ----------------------------------------------
+  start: () ->
+    trace "UM.start"
+
+    UM.bootstrap.call this
+
 
