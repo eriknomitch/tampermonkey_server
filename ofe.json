@@ -1,5 +1,27 @@
 {
   "default": {
-    "extensions": [".js.coffee", ".js", ".css.sass", ".erb", ".rb"]
+    "extensions": [".rb", ".erb", ".scss", ".sass", ".sass", ".yml", ".js", ".css", ".feature", ".coffee", ".rake", ".ejs", ".eco", ".md", ".html"],
+    "files":      ["Gemfile", "Vagrantfile", "Procfile*", "project/*", "scratch", ".env", "run", "ofe.json", ".pryrc"],
+    "exclusions": ["vendor/", "coverage/", "activesupport/", "test/", "spec/"],
+    "first_file": "Gemfile"
+  },
+  "docs": {
+    "extensions": [".md"],
+    "exclusions": ["provisioners/"]
+  },
+  "test": {
+    "files": ["test/**/*.rb", "spec/**/*.rb"]
+  },
+  "diff": {
+    "command": "git diff --name-only"
+  },
+  "untracked": {
+    "command": "git ls-files --other --exclude-standard"
+  },
+  "latest_migration": {
+    "command": "rails-latest-migration"
+  },
+  "git": {
+    "files": [".git/config", ".gitignore"]
   }
 }
