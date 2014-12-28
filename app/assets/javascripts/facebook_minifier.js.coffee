@@ -19,7 +19,7 @@
   UM_hideWhenReady "#mainContainer",
     ready: () ->
 
-      $("#mainContainer").parent().append """
+      $("#mainContainer").parent().html """
       <div id="um_links">
         <a href="/events">Events</a>
         <span>&bull;</span>
@@ -44,8 +44,5 @@
   UM_hideWhenReady "#pagelet_dock"
   UM_hideWhenReady "#pagelet_sidebar"
 
-  #$(unsafeWindow).on "popstate", () =>
-    #UM_main()
-  
   this
 

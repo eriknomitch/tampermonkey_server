@@ -8,23 +8,31 @@
 @UM_on_documentReady = () ->
   trace "UM_on_documentReady"
 
-  # Inject Script
+  UM_prepareWindowOnPushState()
   UM_injectStylesheet()
 
-  # Inject Stylesheet
-  link = document.createElement("link")
+  UM_main() # This is Ubermonkey script's defined UM_main
 
-  link.rel  = "stylesheet"
-  link.href = UM.remote.stylesheet
-  link.type = "text/css"
-
-  $("head").append link
-  
-  # Call script-defined UM_main
-  UM_main()
-
-  # Then generic UM_post
   UM_post()
+
+@UM_prepareWindowOnPushState = () ->
+  return unless UM.restartOn.pushState
+
+    # http://stackoverflow.com/questions/4570093/how-to-get-notified-about-changes-of-the-history-via-history-pushstate 
+    ((history) ->
+      pushState = history.pushState
+      history.pushState = (state) ->
+        history.onpushstate state: state  if typeof history.onpushstate is "function"
+
+        # ... whatever else you want to do
+        # maybe call onhashchange e.handler
+        pushState.apply history, arguments
+
+      return
+    ) window.history
+
+    window.onpopstate = history.onpushstate = (newState) ->
+      UM_start()
 
 @UM_injectStylesheet = () ->
   return unless UM.use.stylesheet

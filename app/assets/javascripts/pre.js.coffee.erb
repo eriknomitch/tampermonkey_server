@@ -8,12 +8,13 @@
     suffix: "/assets"
   use:
     stylesheet: true
+  restartOn:
+    pushState: true
 
-switch UM.env
+[UM.domain, UM.remote.protocol] = switch UM.env
   when "development"
-    UM.domain = "development.ubermonkey-server.com:3000"
-    UM.remote.protocol = "http"
+    ["development.ubermonkey-server.com:3000", "http"]
   when "production"
-    UM.domain = "ubermonkey-server.herokuapp.com"
-    UM.remote.protocol = "https"
+    ["ubermonkey-server.herokuapp.com", "https"]
 
+trace UM
