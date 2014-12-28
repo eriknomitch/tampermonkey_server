@@ -4,23 +4,23 @@ default: &default
   pool: 5
 
 local: &local
-  username: tampermonkey_server
-  password: tampermonkey
+  username: ubermonkey_server
+  password: ubermonkey
   host: localhost
   port: 5432
 
 development:
   <<: *default
   <<: *local
-  database: tampermonkey_server_development
+  database: ubermonkey_server_development
 
 test:
   <<: *default
   <<: *local
-  database: tampermonkey_server_test
+  database: ubermonkey_server_test
 
 production:
   <<: *default
-  database: tampermonkey_server_production
-  username: tampermonkey_server
-  password: <%= ENV['TAMPERMONKEY_SERVER_DATABASE_PASSWORD'] %>
+  database: ubermonkey_server_production
+  username: ubermonkey_server
+  password: <%= ENV['UBERMONKEY_SERVER_DATABASE_PASSWORD'] %>
