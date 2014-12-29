@@ -13,6 +13,15 @@ $.extend UM,
   onDocumentReady: () ->
     trace "UM.onDocumentReady"
 
+    $.extend UM.deferreds,
+      script:          $.Deferred()
+      stylesheet:      $.Deferred()
+      main:            $.Deferred()
+      windowPushState: $.Deferred()
+
+    $.when(UM.deferreds.script, UM.deferreds.stylesheet, UM.deferreds.main, UM.deferreds.windowPushState).done () ->
+      UM.post()
+
     UM.injectUMScript()
     UM.injectUMStylesheet()
 
@@ -20,11 +29,13 @@ $.extend UM,
 
     UM.main() # This is Ubermonkey script's defined UM.main
 
-    UM.post()
+    UM.deferreds.main.resolve()
 
   prepareWindowOnPushState: () ->
 
-    return unless UM.restartOn.pushState
+    unless UM.restartOn.pushState
+      UM.deferreds.windowPushState.resolve()
+      return
 
       # http://stackoverflow.com/questions/4570093/how-to-get-notified-about-changes-of-the-history-via-history-pushstate 
       ((history) ->
@@ -42,27 +53,49 @@ $.extend UM,
       window.onpopstate = history.onpushstate = (newState) ->
         UM.start()
 
+      UM.deferreds.windowPushState.resolve()
+
   injectUMScript: () ->
     script = document.createElement("script")
     
     script.type = "text/javascript"
     script.src  = UM.remote.script
-    
+  
+    # This will call the user-defined UM.main
     $("head").append script
+
+    # FIX: Have a real check...
+    UM.deferreds.script.resolve()
 
   injectUMStylesheet: () ->
     return unless UM.use.stylesheet
-
+    
     trace "UM.injectUMStylesheet"
+    
+    # http://www.phpied.com/when-is-a-stylesheet-really-loaded/
+    style = document.createElement("style")
+    style.textContent = "@import \"#{UM.remote.stylesheet}\""
 
-    link = document.createElement("link")
+    fi = setInterval(->
+      try
+        style.sheet.cssRules # <--- MAGIC: only populated when file is loaded
 
-    link.id   = "um_stylesheet"
-    link.rel  = "stylesheet"
-    link.type = "text/css"
-    link.href = UM.remote.stylesheet
+        UM.deferreds.stylesheet.resolve()
 
-    $("head").append link
+        clearInterval fi
+      return
+    , 10)
+
+    $("head").append style
+
+    #link = document.createElement("link")
+
+    #link.id   = "um_stylesheet"
+    #link.rel  = "stylesheet"
+    #link.type = "text/css"
+    #link.href = UM.remote.stylesheet
+
+    #$("head").append link
 
   # ----------------------------------------------
   # UM->BOOTSTRAP --------------------------------
