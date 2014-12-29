@@ -23,12 +23,15 @@ $.extend UM,
     $.when(UM.deferreds.script, UM.deferreds.stylesheet, UM.deferreds.main, UM.deferreds.windowPushState).done () ->
       UM.post()
 
+    # Injections
     UM.injectUMScript()
     UM.injectUMStylesheet()
 
+    # Handle push state
     UM.prepareWindowOnPushState()
 
-    UM.main() # This is Ubermonkey script's defined UM.main
+    # This is Ubermonkey script's defined UM.main
+    UM.main()
 
     UM.deferreds.main.resolve()
 
