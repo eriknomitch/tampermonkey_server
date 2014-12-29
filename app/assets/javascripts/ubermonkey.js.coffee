@@ -11,7 +11,6 @@ $.extend UM,
   # UM->PREPARATION ------------------------------
   # ----------------------------------------------
   onDocumentReady: () ->
-
     trace "UM.onDocumentReady"
 
     UM.injectUMScript()
@@ -57,9 +56,12 @@ $.extend UM,
     trace "UM.injectUMStylesheet"
 
     link = document.createElement("link")
+
+    link.id   = "um_stylesheet"
     link.rel  = "stylesheet"
-    link.href = UM.remote.stylesheet
     link.type = "text/css"
+    link.href = UM.remote.stylesheet
+
     $("head").append link
 
   # ----------------------------------------------
@@ -129,16 +131,7 @@ $.extend UM,
 
     $("body").show()
     $("#UM_load_block").remove()
-
-  hideWhenReady: (selector, options={}) ->
-
-    $(selector).ready () ->
-
-      $(selector).hide().css
-        display: "none !important"
-
-      options.ready() if options.ready
-
+  
   # ----------------------------------------------
   # UM->START ------------------------------------
   # ----------------------------------------------
@@ -147,4 +140,15 @@ $.extend UM,
 
     UM.bootstrap.call this
 
+  # ------------------------------------------------
+  # ELEMENTS->MODIFICATION -------------------------
+  # ------------------------------------------------
+  hideWhenReady: (selector, options={}) ->
+
+    $(selector).ready () ->
+
+      $(selector).hide().css
+        display: "none !important"
+
+      options.ready() if options.ready
 
