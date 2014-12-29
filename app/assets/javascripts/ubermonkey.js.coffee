@@ -8,7 +8,7 @@
 $.extend UM,
   
   # ----------------------------------------------
-  # UM->PREPARATION ------------------------------
+  # PREPARATION ----------------------------------
   # ----------------------------------------------
   onDocumentReady: () ->
     trace "UM.onDocumentReady"
@@ -59,6 +59,9 @@ $.extend UM,
 
       UM.deferreds.windowPushState.resolve()
 
+  # ----------------------------------------------
+  # INJECTIONS -----------------------------------
+  # ----------------------------------------------
   injectUMScript: () ->
     script = document.createElement("script")
     
@@ -80,26 +83,19 @@ $.extend UM,
     style = document.createElement("style")
     style.textContent = "@import \"#{UM.remote.stylesheet}\""
 
-    fi = setInterval(->
+    waitForStylesheetLoad = setInterval(->
       try
-        style.sheet.cssRules # <--- MAGIC: only populated when file is loaded
+
+        # This is only populated when the CSS file gets loaded
+        style.sheet.cssRules
 
         UM.deferreds.stylesheet.resolve()
 
-        clearInterval fi
+        clearInterval waitForStylesheetLoad
       return
     , 10)
 
     $("head").append style
-
-    #link = document.createElement("link")
-
-    #link.id   = "um_stylesheet"
-    #link.rel  = "stylesheet"
-    #link.type = "text/css"
-    #link.href = UM.remote.stylesheet
-
-    #$("head").append link
 
   # ----------------------------------------------
   # UM->BOOTSTRAP --------------------------------
