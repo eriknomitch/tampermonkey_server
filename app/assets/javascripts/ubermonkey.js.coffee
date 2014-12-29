@@ -19,6 +19,7 @@ $.extend UM,
       main:            $.Deferred()
       windowPushState: $.Deferred()
 
+    # FIX: Define/use Object.values
     $.when(UM.deferreds.script, UM.deferreds.stylesheet, UM.deferreds.main, UM.deferreds.windowPushState).done () ->
       UM.post()
 
