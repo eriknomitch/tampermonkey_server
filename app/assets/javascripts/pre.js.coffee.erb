@@ -26,7 +26,7 @@
 # ------------------------------------------------
 [UM.domain, UM.remote.protocol] = switch UM.env
   when "development"
-    ["development.ubermonkey-server.com:3000", "http"]
+    ["development.ubermonkey-server.com:<%= UbermonkeyServer::DEVELOPMENT_PORT %>", "http"]
   when "production"
     ["ubermonkey-server.herokuapp.com", "https"]
 
