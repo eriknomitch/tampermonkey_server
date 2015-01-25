@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 module UbermonkeyServer
 
+  # FIX: This should be in .env instead
   DEVELOPMENT_PORT = 3001
 
   class Application < Rails::Application
