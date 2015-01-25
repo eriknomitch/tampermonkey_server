@@ -55,4 +55,6 @@ gem 'tzinfo-data'
 
 gem 'rails_12factor', group: [:staging, :production]
 
+gem 'foreman'
+
 ruby '2.1.5'
