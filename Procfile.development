@@ -1,1 +1,2 @@
-web: ./bin/rails server --port 3001
+#web: ./bin/rails server --port 3001
+web: thin --port 3001 start

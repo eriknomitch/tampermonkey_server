@@ -46,6 +46,7 @@ end
 group :development do
   gem 'pry-rails'
   gem 'better_errors'
+  gem 'thin'
 end
 
 gem 'binding_of_caller'
